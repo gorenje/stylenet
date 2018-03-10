@@ -8,7 +8,7 @@ import skimage.io
 import skimage.transform
 import tensorflow as tf
 
-from neural_style import custom_vgg19
+import custom_vgg19
 import stylenet_core
 
 
@@ -173,10 +173,10 @@ def render(content_file, style_file,
                 diff_cost = tf.constant(.0)
             else:
                 diff_filter_h = tf.constant([0, 0, 0, 0, -1, 1, 0, 0, 0], tf.float32, [3, 3, 1, 1])
-                diff_filter_h = tf.concat(2, [diff_filter_h, diff_filter_h, diff_filter_h])
+                diff_filter_h = tf.concat([diff_filter_h, diff_filter_h, diff_filter_h],2)
                 diff_filter_v = tf.constant([0, 0, 0, 0, -1, 0, 0, 1, 0], tf.float32, [3, 3, 1, 1])
-                diff_filter_v = tf.concat(2, [diff_filter_v, diff_filter_v, diff_filter_v])
-                diff_filter = tf.concat(3, [diff_filter_h, diff_filter_v])
+                diff_filter_v = tf.concat([diff_filter_v, diff_filter_v, diff_filter_v],2)
+                diff_filter = tf.concat([diff_filter_h, diff_filter_v],3)
                 filtered_input = tf.nn.conv2d(var_image, diff_filter, [1, 1, 1, 1], "VALID")
                 diff_cost = stylenet_core.l2_norm_cost(filtered_input) * 1e7
 
