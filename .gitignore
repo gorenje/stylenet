@@ -5,3 +5,5 @@ train
 tester.py
 stylenet_gram.py
 custom_vgg16.py
+vgg16.npy
+vgg19.npy
