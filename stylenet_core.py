@@ -28,7 +28,7 @@ def load_image(path, height=None, width=None):
 
 
 def l2_norm(f, reduction_indices=None, keep_dims=False):
-    return tf.sqrt(tf.reduce_sum(tf.square(f), reduction_indices=reduction_indices, keep_dims=keep_dims))
+    return tf.sqrt(tf.reduce_sum(tf.square(f), reduction_indices=reduction_indices, keepdims=keep_dims))
 
 
 def l2_norm_cost(v):
@@ -193,7 +193,7 @@ def _create_patch(sess, content_input, style_input, content_regions, style_regio
         blur = tf.tile(blur, [1, 1, pn, 1])
         conv_var = tf.nn.depthwise_conv2d(conv_var, blur, [1, 1, 1, 1], "SAME")
 
-    max_arg = tf.arg_max(conv_var, 3)
+    max_arg = tf.argmax(conv_var, 3)
     max_arg = tf.reshape(max_arg, [pn])
     max_arg_out = sess.run(max_arg)
 
